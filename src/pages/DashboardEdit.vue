@@ -90,7 +90,7 @@ const chartOptions = {
     },
     title: {
       display: true,
-      text: "Chart.js Bar Chart",
+      text: "Inspections Overview",
     },
   },
 };

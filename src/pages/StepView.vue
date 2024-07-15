@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <q-breadcrumbs align="center" class="q-py-md">
-      <q-breadcrumbs-el label="Home" />
+      <q-breadcrumbs-el label="Home" to="/" />
       <q-breadcrumbs-el label="Permit: ###-###-##" to="/permit" />
       <q-breadcrumbs-el label="Application" />
       <q-breadcrumbs-el label="Applicant Details" />
@@ -21,7 +21,7 @@
           color="grey"
           class="q-mt-md"
           icon="arrow_back"
-          to="/permit"
+          to="/project/"
         />
         <q-btn
           type="submit"
@@ -80,10 +80,9 @@
           <q-btn
             label="Back"
             color="grey"
-            aria-disabled="true"
-            disabled
             class="q-mt-md"
             icon="arrow_back"
+            to="/project/"
           />
           <q-btn
             type="submit"

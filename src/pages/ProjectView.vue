@@ -39,7 +39,7 @@
         <h5>Hours</h5>
         <h6>Total: 171.5</h6>
         <q-btn
-          to="/permit/hours"
+          to="/project/hours"
           label="View Hours"
           icon-right="timer"
           color="secondary"

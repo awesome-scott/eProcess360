@@ -2,7 +2,7 @@
   <q-page padding>
     <q-breadcrumbs align="center" class="q-py-md">
       <q-breadcrumbs-el label="Home" />
-      <q-breadcrumbs-el label="Permit: ###-###-##" to="/permits" />
+      <q-breadcrumbs-el label="Permit: ###-###-##" to="/project" />
       <q-breadcrumbs-el label="Hours" />
     </q-breadcrumbs>
     <div class="q-pa-sm">

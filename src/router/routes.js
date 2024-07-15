@@ -10,19 +10,16 @@ const routes = [
         props: true,
       },
       {
-        path: "project/:type",
+        path: "project/",
         component: () => import("pages/ProjectView.vue"),
-        props: true,
       },
       {
-        path: "project/:type/step",
+        path: "project/step",
         component: () => import("pages/StepView.vue"),
-        props: true,
       },
       {
-        path: "project/:type/hours",
+        path: "project//hours",
         component: () => import("pages/HoursView.vue"),
-        props: true,
       },
       { path: "profile", component: () => import("pages/ProfileView.vue") },
       { path: "dashboard", component: () => import("pages/DashboardView.vue") },

@@ -33,32 +33,29 @@
       <div class="row q-col-gutter-md q-mb-md">
         <div
           class="col-12 col-sm-6 col-md-4"
-          v-for="permitType in filteredProjects"
-          :key="permitType.title"
+          v-for="projectType in filteredProjects"
+          :key="projectType.title"
         >
           <q-card
             v-ripple
-            @click="$router.push(`/permit/step/${permitType.id}`)"
+            @click="$router.push(`/project/step/`)"
             class="permit-card"
           >
             <q-card-section horizontal class="permit-card-content">
               <q-card-section
-                :class="`bg-${permitType.color}`"
+                :class="`bg-${projectType.color}`"
                 class="permit-type-icon-bg flex items-center justify-center"
               >
-                <q-icon :name="permitType.icon" size="4em" color="white" />
+                <q-icon :name="projectType.icon" size="4em" color="white" />
               </q-card-section>
               <q-card-section class="flex-column items-center justify-center">
-                <h6>{{ permitType.title }}</h6>
+                <h6>{{ projectType.title }}</h6>
                 <q-separator class="q-my-sm" />
-                <p class="q-mb-none q-mt-xs">{{ permitType.description }}</p>
+                <p class="q-mb-none q-mt-xs">{{ projectType.description }}</p>
                 <q-separator class="q-my-sm" />
                 <div class="chips text-right">
-                  <q-chip
-                    v-for="tag in permitType.tags"
-                    :key="tag"
-                    :selected="selectedTags.includes(tag)"
-                  >
+                  <q-chip v-for="tag in projectType.tags" :key="tag">
+                    <q-icon v-if="selectedTags.includes(tag)" name="check" />
                     {{ tag }}
                   </q-chip>
                 </div>
@@ -101,6 +98,12 @@ const pageTitle = computed(() => {
       return "Projects";
   }
 });
+watch(
+  () => route.params.type,
+  (newValue) => {
+    selectedTags.value = [newValue];
+  }
+);
 
 onMounted(() => {
   switch (projectType.value) {
