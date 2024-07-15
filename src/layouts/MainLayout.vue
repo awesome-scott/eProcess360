@@ -14,7 +14,7 @@
       <q-tabs inline-label align="center" class="bg-primary text-white">
         <q-route-tab to="/" label="Home" icon="home" />
         <q-route-tab to="/dashboard" label="Dashboard" icon="analytics" />
-        <q-route-tab to="/permits" label="Permits" icon="assignment" />
+        <q-route-tab to="/projects" label="Permits" icon="assignment" />
         <q-route-tab to="/login" label="Log In" icon="login" />
       </q-tabs>
     </q-header>
