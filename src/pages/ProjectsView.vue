@@ -19,7 +19,7 @@
           <q-btn round dense flat icon="search" />
         </template>
       </q-input>
-      <div class="row chip-suggestions">
+      <div class="row q-my-md chip-suggestions">
         <q-chip
           v-for="tag of allTags"
           clickable
@@ -30,7 +30,7 @@
           >{{ tag.name }}</q-chip
         >
       </div>
-      <div class="row q-col-gutter-md">
+      <div class="row q-col-gutter-md q-mb-md">
         <div
           class="col-12 col-sm-6 col-md-4"
           v-for="permitType of filteredPermits"
