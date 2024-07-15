@@ -1,7 +1,9 @@
 <template>
+  {{ localActiveStep }}
+  {{ activeStep }}
   <q-stepper
     flat
-    v-model:model-value="activeStep"
+    v-model:model-value="localActiveStep"
     header-nav
     alternative-labels
     :vertical="$q.screen.lt.sm"
@@ -20,16 +22,15 @@
       :error-icon="getIcon(step)"
       :header-nav="step.done || step.current"
       active-color="primary"
-      :class="{ 'is-stage': step.isStage }"
+      :class="step.isStage ? 'is-stage' : 'is-step'"
     />
   </q-stepper>
 </template>
 
 <script setup>
-// Hackish setup using error-icon to get rid of bubble behind icon.
-// Hackish setup using captions and titles to distinguish stage vs. step. since :class doesn't work for horizontal
-// Clearly a bug in quasar's implementation of vertical
 import { ref, computed, watch } from "vue";
+
+const emit = defineEmits(["update:activeStage", "update:activeStep"]);
 
 const props = defineProps({
   stages: {
@@ -46,24 +47,26 @@ const props = defineProps({
   },
 });
 
-const activeStage = ref(props.activeStage);
-const activeStep = ref(props.activeStep);
+const localActiveStage = ref(props.activeStage);
+const localActiveStep = ref(props.activeStep);
 
 watch(
   () => props.activeStage,
   (newVal) => {
-    activeStage.value = newVal;
+    localActiveStage.value = newVal;
   }
 );
 
 watch(
   () => props.activeStep,
   (newVal) => {
-    activeStep.value = newVal;
+    localActiveStep.value = newVal;
   }
 );
 
-watch(activeStep, (newValue, oldValue) => {
+const onStepChange = (newValue) => {
+  const oldValue = localActiveStep.value;
+
   // Check if newValue corresponds to a stage
   const clickedStage = props.stages.find((stage) => stage.name === newValue);
 
@@ -71,16 +74,19 @@ watch(activeStep, (newValue, oldValue) => {
     // Check if stage is not disabled
     if (clickedStage.done || clickedStage.current) {
       // Update activeStage to the new stage name
-      activeStage.value = newValue;
+      localActiveStage.value = newValue;
+      emit("update:activeStage", newValue);
 
       // Set activeStep to the first step of the new stage
       const firstStep = clickedStage.steps[0];
       if (firstStep) {
-        activeStep.value = firstStep.name;
+        localActiveStep.value = firstStep.name;
+        emit("update:activeStep", firstStep.name);
       }
     } else {
       // Reset activeStep if stage is disabled
-      activeStep.value = oldValue;
+      localActiveStep.value = oldValue;
+      emit("update:activeStep", oldValue);
     }
   } else {
     // Find the step in props.stages and check if it's disabled
@@ -90,12 +96,18 @@ watch(activeStep, (newValue, oldValue) => {
 
     if (!isStepDisabled) {
       // Update activeStep to the new step name
-      activeStep.value = newValue;
+      localActiveStep.value = newValue;
+      emit("update:activeStep", newValue);
     } else {
       // Reset activeStep if step is disabled
-      activeStep.value = oldValue;
+      localActiveStep.value = oldValue;
+      emit("update:activeStep", oldValue);
     }
   }
+};
+
+watch(localActiveStep, (newValue) => {
+  onStepChange(newValue);
 });
 
 const filteredSteps = computed(() => {
@@ -108,16 +120,16 @@ const filteredSteps = computed(() => {
       isStage: true,
       done: stage.done,
       current: stage.current,
-      isActive: stage.name === activeStage.value,
+      isActive: stage.name === localActiveStage.value,
     });
 
-    if (stage.name === activeStage.value) {
+    if (stage.name === localActiveStage.value) {
       stage.steps.forEach((step) => {
         flatSteps.push({
           name: step.name,
           done: step.done,
           current: step.current,
-          isActive: step.name === activeStep.value,
+          isActive: step.name === localActiveStep.value,
         });
       });
     }
@@ -141,6 +153,7 @@ const getIcon = (step) => {
   }
 };
 </script>
+
 <style lang="scss">
 .q-stepper__tab {
   padding-left: 0 !important;

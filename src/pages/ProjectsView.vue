@@ -1,11 +1,11 @@
 <template>
   <q-page padding>
     <q-breadcrumbs align="center" class="q-py-md">
-      <q-breadcrumbs-el label="Home" />
-      <q-breadcrumbs-el label="Permits" />
+      <q-breadcrumbs-el label="Home" to="/" />
+      <q-breadcrumbs-el :label="pageTitle" />
     </q-breadcrumbs>
     <header class="q-pa-sm text-center">
-      <h3>Permits</h3>
+      <h3>{{ pageTitle }}</h3>
     </header>
     <section>
       <q-input
@@ -21,24 +21,24 @@
       </q-input>
       <div class="row q-my-md chip-suggestions">
         <q-chip
-          v-for="tag of allTags"
+          v-for="tag in filteredTags"
           clickable
-          :key="tag.name"
-          :color="tag.color"
-          text-color="white"
-          @click="filterPermitsByTag(tag.name)"
-          >{{ tag.name }}</q-chip
+          :selected="selectedTags.includes(tag)"
+          :key="tag"
+          @click="toggleTag(tag)"
         >
+          {{ tag }}
+        </q-chip>
       </div>
       <div class="row q-col-gutter-md q-mb-md">
         <div
           class="col-12 col-sm-6 col-md-4"
-          v-for="permitType of filteredPermits"
+          v-for="permitType in filteredProjects"
           :key="permitType.title"
         >
           <q-card
             v-ripple
-            @click="$router.push('/permit/step')"
+            @click="$router.push(`/permit/step/${permitType.id}`)"
             class="permit-card"
           >
             <q-card-section horizontal class="permit-card-content">
@@ -55,12 +55,12 @@
                 <q-separator class="q-my-sm" />
                 <div class="chips text-right">
                   <q-chip
-                    v-for="tag of permitType.tags"
+                    v-for="tag in permitType.tags"
                     :key="tag"
-                    :color="permitType.color"
-                    text-color="white"
-                    >{{ tag }}</q-chip
+                    :selected="selectedTags.includes(tag)"
                   >
+                    {{ tag }}
+                  </q-chip>
                 </div>
               </q-card-section>
             </q-card-section>
@@ -72,112 +72,112 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-defineOptions({
-  name: "ProjectsView",
-});
+import { computed, ref, onMounted, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import permits from "assets/data/permits";
+import licenses from "assets/data/licenses";
+import complaints from "assets/data/complaints";
+
+const route = useRoute();
+const router = useRouter();
+
+const projectType = ref(route.params.type);
 const searchText = ref("");
-const allTags = [
-  { name: "permit", color: "grey" },
-  { name: "building", color: "red" },
-  { name: "new construction", color: "red" },
-  { name: "residential", color: "red" },
-  { name: "commercial", color: "blue" },
-  { name: "renovation", color: "red" },
-  { name: "construction", color: "grey" },
-  { name: "signage", color: "purple" },
-  { name: "installation", color: "purple" },
-  { name: "demolition", color: "orange" },
-  { name: "event", color: "green" },
-  { name: "outdoor", color: "green" },
-  { name: "public", color: "grey" },
-  { name: "restaurant", color: "blue" },
-  { name: "patio", color: "blue" },
-  { name: "pool", color: "red" },
-];
+const projects = ref([...permits, ...licenses, ...complaints]);
+const filteredProjects = ref([]);
+const allTags = ref([]);
+const filteredTags = ref([]);
+const selectedTags = ref([]);
 
-const permitTypes = [
-  {
-    title: "New Residential Building Permit",
-    description:
-      "This is a building permit for new construction in residential areas.",
-    icon: "home",
-    tags: ["permit", "building", "new construction", "residential"],
-    color: "red",
-  },
-  {
-    title: "Parking Lot - Commercial (Other)",
-    description: "A cleared area intended for parking vehicles",
-    icon: "local_parking",
-    tags: ["permit", "commercial", "new construction"],
-    color: "blue",
-  },
-  {
-    title: "Home Renovation Permit",
-    description:
-      "Permit for renovations and alterations to residential properties.",
-    icon: "build",
-    tags: ["permit", "renovation", "residential", "construction"],
-    color: "red",
-  },
-  {
-    title: "Commercial Sign Installation Permit",
-    description: "Permit required for installing signage in commercial areas.",
-    icon: "storefront",
-    tags: ["permit", "commercial", "signage", "installation"],
-    color: "purple",
-  },
-  {
-    title: "Demolition Permit",
-    description: "Permit for the demolition of buildings or structures.",
-    icon: "construction",
-    tags: ["permit", "demolition", "construction"],
-    color: "orange",
-  },
-  {
-    title: "Outdoor Event Permit",
-    description: "Permit for organizing events in outdoor public spaces.",
-    icon: "event",
-    tags: ["permit", "event", "outdoor", "public"],
-    color: "green",
-  },
-  {
-    title: "Restaurant Patio Construction Permit",
-    description:
-      "Permit for constructing outdoor dining patios for restaurants.",
-    icon: "dining",
-    tags: ["permit", "restaurant", "construction", "patio"],
-    color: "blue",
-  },
-  {
-    title: "Pool Installation Permit",
-    description:
-      "Permit for the installation of swimming pools in residential properties.",
-    icon: "pool",
-    tags: ["permit", "pool", "residential", "construction"],
-    color: "red",
-  },
-];
+const pageTitle = computed(() => {
+  switch (projectType.value) {
+    case "permit":
+      return "Permits";
+    case "license":
+      return "Licenses";
+    case "complaint":
+      return "Complaints";
+    default:
+      return "Projects";
+  }
+});
 
-const filteredPermits = ref(permitTypes);
+onMounted(() => {
+  switch (projectType.value) {
+    case "permit":
+      selectedTags.value = ["permit"];
+      break;
+    case "license":
+      selectedTags.value = ["license"];
+      break;
+    case "complaint":
+      selectedTags.value = ["complaint"];
+      break;
+    default:
+      selectedTags.value = [];
+  }
 
-const filterPermitsByTag = (tagName) => {
-  filteredPermits.value = permitTypes.filter((permit) =>
-    permit.tags.includes(tagName)
-  );
+  if (projects.value) {
+    const tags = new Set();
+    projects.value.forEach((project) => {
+      project.tags.forEach((tag) => {
+        tags.add(tag);
+      });
+    });
+    allTags.value = Array.from(tags);
+    filteredProjects.value = projects.value;
+    updateFilteredTags();
+  }
+});
+
+const toggleTag = (tag) => {
+  if (selectedTags.value.includes(tag)) {
+    selectedTags.value = selectedTags.value.filter((t) => t !== tag);
+  } else {
+    selectedTags.value.push(tag);
+  }
+  filterProjects();
 };
+
+const filterProjects = () => {
+  if (selectedTags.value.length === 0) {
+    filteredProjects.value = projects.value;
+  } else {
+    filteredProjects.value = projects.value.filter((project) =>
+      selectedTags.value.every((tag) => project.tags.includes(tag))
+    );
+  }
+  updateFilteredTags();
+};
+
+const updateFilteredTags = () => {
+  const tags = new Set();
+  filteredProjects.value.forEach((project) => {
+    project.tags.forEach((tag) => {
+      tags.add(tag);
+    });
+  });
+  filteredTags.value = Array.from(tags);
+};
+
+watch(selectedTags, filterProjects);
+
 watch(searchText, (newValue) => {
   if (newValue !== "") {
     const search = searchText.value.toLowerCase().trim();
-    filteredPermits.value = permitTypes.filter(
-      (permit) =>
-        permit.title.toLowerCase().includes(search) ||
-        permit.description.toLowerCase().includes(search) ||
-        permit.tags.some((tag) => tag.toLowerCase().includes(search))
+    filteredProjects.value = projects.value.filter(
+      (project) =>
+        project.title.toLowerCase().includes(search) ||
+        project.description.toLowerCase().includes(search) ||
+        project.tags.some((tag) => tag.toLowerCase().includes(search))
     );
+  } else {
+    filterProjects();
   }
+  updateFilteredTags();
 });
 </script>
+
 <style lang="scss">
 .permit-card {
   background-color: hsla(0, 0%, 100%, 1);

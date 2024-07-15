@@ -2,21 +2,27 @@
   <q-page padding>
     <q-breadcrumbs align="center" class="q-py-md">
       <q-breadcrumbs-el label="Home" />
-      <q-breadcrumbs-el label="Permit: ###-###-##" to="/permits" />
+      <q-breadcrumbs-el label="Permit: ###-###-##" to="/permit" />
       <q-breadcrumbs-el label="Application" />
       <q-breadcrumbs-el label="Applicant Details" />
     </q-breadcrumbs>
     <div class="q-px-md">
       <StepperNavigation
         :stages="stages"
-        :activeStage="activeStage"
-        :activeStep="activeStep"
+        v-model:activeStage="activeStage"
+        v-model:activeStep="activeStep"
       />
     </div>
     <div class="q-pa-sm">
       <h3 class="text-center">Applicant Details</h3>
       <div class="actions-top row flex-center q-gutter-md q-mb-md">
-        <q-btn label="Back" color="grey" class="q-mt-md" icon="arrow_back" />
+        <q-btn
+          label="Back"
+          color="grey"
+          class="q-mt-md"
+          icon="arrow_back"
+          to="/permit"
+        />
         <q-btn
           type="submit"
           label="Save"
@@ -34,7 +40,7 @@
       </div>
       <q-form>
         <q-card class="q-pa-md q-mb-md">
-          <h6>Applicant</h6>
+          <h6>{{ activeStep }}</h6>
           <q-input label="Name" outlined clearable class="q-mb-md" />
           <q-input label="Email" outlined clearable class="q-mb-md" />
           <q-input label="Phone" outlined clearable class="q-mb-md" />

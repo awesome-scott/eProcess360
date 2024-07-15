@@ -4,10 +4,26 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       { path: "", component: () => import("pages/IndexPage.vue") },
-      { path: "projects", component: () => import("pages/ProjectsView.vue") },
-      { path: "permits", component: () => import("pages/PermitsView.vue") },
-      { path: "permit/step", component: () => import("pages/StepView.vue") },
-      { path: "permit/hours", component: () => import("pages/HoursView.vue") },
+      {
+        path: "projects/:type",
+        component: () => import("pages/ProjectsView.vue"),
+        props: true,
+      },
+      {
+        path: "project/:type",
+        component: () => import("pages/ProjectView.vue"),
+        props: true,
+      },
+      {
+        path: "project/:type/step",
+        component: () => import("pages/StepView.vue"),
+        props: true,
+      },
+      {
+        path: "project/:type/hours",
+        component: () => import("pages/HoursView.vue"),
+        props: true,
+      },
       { path: "profile", component: () => import("pages/ProfileView.vue") },
       { path: "dashboard", component: () => import("pages/DashboardView.vue") },
       {
@@ -20,6 +36,7 @@ const routes = [
         component: () => import("pages/AdminSettings.vue"),
       },
       { path: "theme-editor", component: () => import("pages/ThemeView.vue") },
+      { path: "contact", component: () => import("pages/ContactPage.vue") },
     ],
   },
 
