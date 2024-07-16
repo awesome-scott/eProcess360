@@ -69,21 +69,20 @@
               title="Your Projects"
               :rows="activeProjects"
               :columns="columns"
-              row-key="id"
+              row-key="number"
               class="q-mt-md"
+              @row-click="goToProject"
             >
-              <template v-slot:body-cell-actions="{ row }">
-                <div
-                  v-if="row.status !== 'Complete' && row.status !== 'Canceled'"
-                >
-                  <q-btn
-                    label="Continue"
-                    color="secondary"
-                    to="/project/step"
-                    class="q-mt-xs"
-                    size="sm"
-                  />
-                </div>
+              <template v-slot:body-cell-modified="props">
+                <q-td :props="props">
+                  <div>
+                    <q-tooltip anchor="top middle">
+                      <div>Created: {{ props.row.startDate }}</div>
+                      <div>Modified: {{ props.row.modified }}</div>
+                    </q-tooltip>
+                    {{ props.row.modified.split(" ")[0] }}
+                  </div>
+                </q-td>
               </template>
             </q-table>
           </div>
@@ -112,42 +111,43 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import gisData from "assets/data/gisdata.js";
 defineOptions({
   name: "HomePage",
 });
+const router = useRouter();
 const text = ref("");
 const isLoggedIn = ref(false);
 const columns = [
-  { name: "type", label: "Project Type", align: "left", field: "name" },
-  { name: "startDate", label: "Start Date", align: "left", field: "startDate" },
-  { name: "endDate", label: "End Date", align: "left", field: "endDate" },
+  { name: "type", label: "Project Type", align: "left", field: "type" },
+  { name: "number", label: "Project #", align: "left", field: "number" },
+  { name: "modified", label: "Modified", align: "left", field: "modified" },
   { name: "status", label: "Status", align: "left", field: "status" },
-  { name: "actions", label: "Actions", align: "left", field: "actions" },
 ];
-const activeProjects = [
+const activeProjects = ref([
   {
-    id: 1,
+    number: "123-45-4444",
     type: "Building Permit",
-    startDate: "2022-01-01",
-    endDate: "2022-01-31",
+    startDate: "2022-01-01 09:00",
+    modified: "2022-01-31 17:00",
     status: "Complete",
   },
   {
-    id: 2,
-    name: "Noise Complaint",
-    startDate: "2022-02-01",
-    endDate: "",
-    status: "Stage/Step",
+    number: "43-45-3214",
+    type: "Noise Complaint",
+    startDate: "2022-02-01 08:00",
+    modified: "2022-02-01 12:30",
+    status: "Application / Fee",
   },
   {
-    id: 3,
-    name: "Fire Plan Review",
-    startDate: "2022-03-01",
-    endDate: "",
-    status: "Stage/Step",
+    number: "885-032-3321",
+    type: "Fire Plan Review",
+    startDate: "2022-03-01 10:15",
+    modified: "2022-03-01 15:45",
+    status: "Inspection / Review",
   },
-];
+]);
 const links = ref([
   {
     title: "Connect With Us",
@@ -181,6 +181,14 @@ const links = ref([
     to: "/contact",
   },
 ]);
+
+const goToProject = (step) => {
+  if (step == "step") {
+    router.push(`/project/step`);
+    return;
+  }
+  router.push(`/project`);
+};
 </script>
 
 <style scoped>
