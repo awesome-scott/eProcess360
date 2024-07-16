@@ -19,11 +19,31 @@
           <q-btn round dense flat icon="search" />
         </template>
       </q-input>
-      <div class="row q-my-md chip-suggestions">
+      <div class="row" v-show="selectedTags.length > 0">
+        <q-chip
+          clickable
+          color="red"
+          text-color="white"
+          @click="selectedTags = []"
+          icon="close"
+          label="Clear All"
+        />
+        <q-chip
+          v-for="tag in selectedTags"
+          clickable
+          :key="tag"
+          color="secondary"
+          text-color="white"
+          selected
+          @click="toggleTag(tag)"
+        >
+          {{ tag }}
+        </q-chip>
+      </div>
+      <div class="row q-mb-md chip-suggestions">
         <q-chip
           v-for="tag in filteredTags"
           clickable
-          :selected="selectedTags.includes(tag)"
           :key="tag"
           @click="toggleTag(tag)"
         >
@@ -69,8 +89,8 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, watch } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { ref, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 import permits from "assets/data/permits";
 import licenses from "assets/data/licenses";
 import complaints from "assets/data/complaints";
@@ -142,7 +162,6 @@ const toggleTag = (tag) => {
 };
 
 watch([selectedTags, searchText], ([tags, search]) => {
-  console.log(tags);
   if (tags.length === 0) {
     filteredProjects.value = projects.value;
   } else {
@@ -150,7 +169,6 @@ watch([selectedTags, searchText], ([tags, search]) => {
       tags.every((tag) => project.tags.includes(tag))
     );
   }
-  console.log(filteredProjects.value);
   if (search !== "") {
     const searchValue = search.toLowerCase().trim();
     filteredProjects.value = filteredProjects.value.filter(
@@ -167,10 +185,24 @@ const updateFilteredTags = () => {
   const tags = new Set();
   filteredProjects.value.forEach((project) => {
     project.tags.forEach((tag) => {
-      tags.add(tag);
+      if (!selectedTags.value.includes(tag)) {
+        tags.add(tag);
+      }
     });
   });
   filteredTags.value = Array.from(tags);
+  const rarityMap = new Map();
+  filteredProjects.value.forEach((project) => {
+    project.tags.forEach((tag) => {
+      if (!selectedTags.value.includes(tag)) {
+        if (rarityMap.has(tag)) {
+          rarityMap.set(tag, rarityMap.get(tag) + 1);
+        } else {
+          rarityMap.set(tag, 1);
+        }
+      }
+    });
+  });
 };
 </script>
 
