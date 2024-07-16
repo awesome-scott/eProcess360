@@ -21,6 +21,11 @@
           label="Complaints"
           icon="report"
         />
+        <q-route-tab
+          to="/contracts"
+          label="Contracts"
+          icon="document_scanner"
+        />
         <q-route-tab to="/login" label="Log In" icon="login" />
       </q-tabs>
     </q-header>
@@ -55,7 +60,7 @@
 </template>
 
 <script setup>
-// TODO: make header height 128px for desktop and 64px for mobile
+// TODO: menubar is too long. Consider which are needed and consider only showing icons with tooltips ? (kind of hate that)
 import { ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
 

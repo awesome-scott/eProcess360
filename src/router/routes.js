@@ -34,6 +34,8 @@ const routes = [
       },
       { path: "theme-editor", component: () => import("pages/ThemeView.vue") },
       { path: "contact", component: () => import("pages/ContactPage.vue") },
+      { path: "contracts", component: () => import("pages/ContractsView.vue") },
+      { path: "contract", component: () => import("pages/ContractView.vue") },
     ],
   },
 
