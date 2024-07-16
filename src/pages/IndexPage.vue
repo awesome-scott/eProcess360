@@ -3,7 +3,9 @@
     <div class="row q-col-gutter-md q-mb-lg">
       <div class="col-12 col-md-6 column">
         <div>
-          <p>Please search for the parcel that you are working with.</p>
+          <p class="text-center q-mb-none">
+            Please search for the parcel that you are working with.
+          </p>
         </div>
         <q-input
           rounded
