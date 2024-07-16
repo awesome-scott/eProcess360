@@ -11,13 +11,13 @@
         label="Back"
         icon="arrow_back"
         color="grey"
-        @click="router.push('/contracts')"
+        @click="$router.push('/contracts')"
         />
       <q-btn
         label="Edit"
         icon="edit"
         color="secondary"
-        @click="router.push('/contract/edit')"
+        @click="$router.push('/contract/edit')"
         />
     </div>
     <q-card class="bg-orange text-center text-white q-pa-sm q-mb-sm">Days Left In Contract<br/><h4 class="text-white">22</h4></q-card>
