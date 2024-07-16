@@ -76,8 +76,7 @@ import licenses from "assets/data/licenses";
 import complaints from "assets/data/complaints";
 
 const route = useRoute();
-const router = useRouter();
-
+const pageTitle = ref("Projects");
 const projectType = ref(route.params.type);
 const searchText = ref("");
 const projects = ref([...permits, ...licenses, ...complaints]);
@@ -86,22 +85,23 @@ const allTags = ref([]);
 const filteredTags = ref([]);
 const selectedTags = ref([]);
 
-const pageTitle = computed(() => {
-  switch (projectType.value) {
-    case "permit":
-      return "Permits";
-    case "license":
-      return "Licenses";
-    case "complaint":
-      return "Complaints";
-    default:
-      return "Projects";
-  }
-});
 watch(
   () => route.params.type,
   (newValue) => {
     selectedTags.value = [newValue];
+    switch (newValue) {
+      case "permit":
+        pageTitle.value = "Permits";
+        break;
+      case "license":
+        pageTitle.value = "Licenses";
+        break;
+      case "complaint":
+        pageTitle.value = "Complaints";
+        break;
+      default:
+        pageTitle.value = "Projects";
+    }
   }
 );
 
