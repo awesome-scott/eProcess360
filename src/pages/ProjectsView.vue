@@ -137,21 +137,31 @@ const toggleTag = (tag) => {
   if (selectedTags.value.includes(tag)) {
     selectedTags.value = selectedTags.value.filter((t) => t !== tag);
   } else {
-    selectedTags.value.push(tag);
+    selectedTags.value = [...selectedTags.value, tag];
   }
-  filterProjects();
 };
 
-const filterProjects = () => {
-  if (selectedTags.value.length === 0) {
+watch([selectedTags, searchText], ([tags, search]) => {
+  console.log(tags);
+  if (tags.length === 0) {
     filteredProjects.value = projects.value;
   } else {
     filteredProjects.value = projects.value.filter((project) =>
-      selectedTags.value.every((tag) => project.tags.includes(tag))
+      tags.every((tag) => project.tags.includes(tag))
+    );
+  }
+  console.log(filteredProjects.value);
+  if (search !== "") {
+    const searchValue = search.toLowerCase().trim();
+    filteredProjects.value = filteredProjects.value.filter(
+      (project) =>
+        project.title.toLowerCase().includes(searchValue) ||
+        project.description.toLowerCase().includes(searchValue) ||
+        project.tags.some((tag) => tag.toLowerCase().includes(searchValue))
     );
   }
   updateFilteredTags();
-};
+});
 
 const updateFilteredTags = () => {
   const tags = new Set();
@@ -162,23 +172,6 @@ const updateFilteredTags = () => {
   });
   filteredTags.value = Array.from(tags);
 };
-
-watch(selectedTags, filterProjects);
-
-watch(searchText, (newValue) => {
-  if (newValue !== "") {
-    const search = searchText.value.toLowerCase().trim();
-    filteredProjects.value = projects.value.filter(
-      (project) =>
-        project.title.toLowerCase().includes(search) ||
-        project.description.toLowerCase().includes(search) ||
-        project.tags.some((tag) => tag.toLowerCase().includes(search))
-    );
-  } else {
-    filterProjects();
-  }
-  updateFilteredTags();
-});
 </script>
 
 <style lang="scss">
