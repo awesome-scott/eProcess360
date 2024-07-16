@@ -29,7 +29,7 @@
         <h5>Application Progress</h5>
         <h6>Stage / Step</h6>
         <q-btn
-          to="permit/step"
+          to="project/step"
           label="Continue Application"
           icon-right="arrow_right_alt"
           color="secondary"
