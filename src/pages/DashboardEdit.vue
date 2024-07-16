@@ -15,8 +15,18 @@
       />
     </div>
     <div class="row justify-center q-gutter-sm">
-      <q-btn label="Delete Dashboard" icon-right="delete" color="red" />
-      <q-btn label="Add Widget" icon-right="add" color="secondary" />
+      <q-btn
+        label="Delete Dashboard"
+        icon-right="delete"
+        color="red"
+        @click="isDeleteDashboardDialogOpen = true"
+      />
+      <q-btn
+        label="Add Widget"
+        icon-right="add"
+        color="secondary"
+        @click="isAddWidgetDialogOpen = true"
+      />
       <q-btn
         label="Save Layout"
         icon-right="save"
@@ -46,6 +56,42 @@
         <BarChart :chartData="barChartData" :options="chartOptions" />
       </div>
     </div>
+    <q-dialog v-model="isAddWidgetDialogOpen">
+      <q-card>
+        <q-card-section>
+          <h5>Select a widget to add</h5>
+          <q-select
+            v-model="selectedWidget"
+            label="Select Widget"
+            outlined
+            :options="['Bar Chart', 'Line Chart']"
+            @change="isAddWidgetDialogOpen = false"
+          >
+          </q-select>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="isDeleteDashboardDialogOpen">
+      <q-card>
+        <q-card-section>
+          <h5>Are you sure you want to delete this dashboard?</h5>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn
+            label="Cancel"
+            color="primary"
+            flat
+            @click="isDeleteDashboardDialogOpen = false"
+          />
+          <q-btn
+            label="Delete"
+            color="red"
+            flat
+            @click="isDeleteDashboardDialogOpen = false"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -79,7 +125,8 @@ ChartJS.register(
   LineElement,
   LineController
 );
-
+const isAddWidgetDialogOpen = ref(false);
+const isDeleteDashboardDialogOpen = ref(false);
 const selectedDashboard = ref("Permits Overview");
 
 const chartOptions = {
