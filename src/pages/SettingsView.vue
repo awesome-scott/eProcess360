@@ -1,5 +1,13 @@
 <template>
   <q-page>
+    <q-breadcrumbs align="center" class="q-py-md">
+      <q-breadcrumbs-el
+        v-for="breadcrumb of breadcrumbs"
+        :key="breadcrumb.label"
+        :label="breadcrumb.label"
+        :to="breadcrumb.to"
+      />
+    </q-breadcrumbs>
     <h3 class="text-center">Settings</h3>
     <div class="row">
       <div class="col-4">
@@ -85,7 +93,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
 const menu = ref([
   {
@@ -193,6 +201,14 @@ const expandItem = (item) => {
 
 const selectItem = (item) => {
   selectedItem.value = item;
+  const selectedAncestors = findAncestors(item, menu.value);
+  const breadcrumbLabels = selectedAncestors.map((ancestor) => ancestor.label);
+  breadcrumbLabels.push(item.label);
+  breadcrumbs.value = [
+    { label: "Home", to: "/" },
+    { label: "Settings" },
+    ...breadcrumbLabels.map((label) => ({ label })),
+  ];
   closeNonParentItems(item);
 };
 const closeNonParentItems = (item, items = menu.value) => {
@@ -239,6 +255,8 @@ const isParentOf = (child, parent) => {
 const isSelected = (item) => {
   return selectedItem.value === item;
 };
+
+const breadcrumbs = ref([{ label: "Home", to: "/" }, { label: "Settings" }]);
 </script>
 
 <style scoped>
