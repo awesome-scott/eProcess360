@@ -36,6 +36,10 @@ const routes = [
       { path: "contact", component: () => import("pages/ContactPage.vue") },
       { path: "contracts", component: () => import("pages/ContractsView.vue") },
       { path: "contract", component: () => import("pages/ContractView.vue") },
+      {
+        path: "contract/edit",
+        component: () => import("pages/ContractEdit.vue"),
+      },
     ],
   },
 

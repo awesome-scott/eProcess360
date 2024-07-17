@@ -22,7 +22,7 @@
       <div class="row" v-show="selectedTags.length > 0">
         <q-chip
           clickable
-          color="red"
+          color="negative"
           text-color="white"
           @click="selectedTags = []"
           icon="close"

@@ -21,7 +21,7 @@
         />
     </div>
     <q-card class="bg-orange text-center text-white q-pa-sm q-mb-sm">Days Left In Contract<br/><h4 class="text-white">22</h4></q-card>
-    <div class="row">
+    <div class="row q-col-gutter-md">
       <div class="q-mb-md col-12 col-sm-6">
         <h5>Client Details</h5>
         <div><strong>Client: </strong>City of Londonville</div>
@@ -88,7 +88,7 @@
             <q-icon name="description" size="2em" />
             <div>Contract Document 1</div>
           </q-card>
-      </div>
+        </div>
       </div>
     </div>
     </div>
@@ -190,7 +190,7 @@ const columns = ref([
 ]);
 const billables = ref([
   {
-    billable_item: "Building Permit",
+    billable_item: "Permit Tech Fee",
     rate: "$100",
     percent_increase: "5%",
     year_1: "$100",
@@ -199,7 +199,7 @@ const billables = ref([
     year_4: "$115",
   },
   {
-    billable_item: "Electrical Permit",
+    billable_item: "Plan Review Fee",
     rate: "$50",
     percent_increase: "5%",
     year_1: "$50",
@@ -208,7 +208,7 @@ const billables = ref([
     year_4: "$57.50",
   },
   {
-    billable_item: "Plumbing Permit",
+    billable_item: "Inspection Fee",
     rate: "$75",
     percent_increase: "5%",
     year_1: "$75",

@@ -18,7 +18,7 @@
       <q-btn
         label="Delete Dashboard"
         icon-right="delete"
-        color="red"
+        color="negative"
         @click="isDeleteDashboardDialogOpen = true"
       />
       <q-btn
@@ -85,7 +85,7 @@
           />
           <q-btn
             label="Delete"
-            color="red"
+            color="negative"
             flat
             @click="isDeleteDashboardDialogOpen = false"
           />
