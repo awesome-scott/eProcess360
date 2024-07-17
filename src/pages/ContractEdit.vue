@@ -16,7 +16,7 @@
       <q-btn
         label="Save"
         icon="save"
-        color="green"
+        color="positive"
         @click="$router.push('/contract')"
       />
     </div>
@@ -265,7 +265,7 @@
             icon="cancel"
             @click="isAddContractorDialogOpen = false"
           />
-          <q-btn type="submit" label="Save" color="green" icon="save" />
+          <q-btn type="submit" label="Save" color="positive" icon="save" />
         </q-card-actions>
       </q-form>
     </q-card>
@@ -308,7 +308,7 @@
             icon="cancel"
             @click="isAddReminderOpen = false"
           />
-          <q-btn type="submit" label="Save" color="green" icon="save" />
+          <q-btn type="submit" label="Save" color="positive" icon="save" />
         </q-card-actions>
       </q-form>
     </q-card>

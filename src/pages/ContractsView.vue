@@ -19,7 +19,11 @@
             @click="goToContract(props.row)"
             :label="`${props.value} days`"
             :color="
-              props.value < 0 ? 'red' : props.value < 30 ? 'orange' : 'green'
+              props.value < 0
+                ? 'red'
+                : props.value < 30
+                ? 'warning'
+                : 'positive'
             "
           />
           <q-linear-progress

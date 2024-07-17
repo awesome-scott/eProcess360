@@ -30,7 +30,7 @@
       <q-btn
         label="Save Layout"
         icon-right="save"
-        color="green"
+        color="positive"
         to="/dashboard"
       />
     </div>
