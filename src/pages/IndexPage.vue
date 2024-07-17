@@ -18,7 +18,13 @@
             <q-btn round dense flat icon="search" />
           </template>
         </q-input>
-        <q-skeleton type="rect" width="100%" height="400px" class="q-my-sm" />
+        <q-skeleton
+          type="rect"
+          width="100%"
+          height="400px"
+          class="q-my-sm"
+          @click="text = 'Some Address'"
+        />
         <div class="results text-center" v-if="text">
           <h6 class="text-center">Sample Address For Project</h6>
           <q-btn
@@ -175,12 +181,6 @@ const links = ref([
     description: "Please don't complain about me.",
     icon: "report",
     to: "/projects/complaint",
-  },
-  {
-    title: "Contact Us",
-    description: "We're here to help.",
-    icon: "contact_support",
-    to: "/contact",
   },
 ]);
 
