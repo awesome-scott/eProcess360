@@ -19,11 +19,7 @@
         <div>Ogden, UT 84403</div>
       </section>
     </section>
-    <StepperNavigation
-      :stages="stages"
-      :activeStage="activeStage"
-      :activeStep="activeStep"
-    />
+    <StepperNavigation />
     <div class="row">
       <div class="col-12 col-sm-6 q-pa-sm text-center">
         <h5>Application Progress</h5>
@@ -54,23 +50,5 @@ import StepperNavigation from "components/StepperNavigation.vue";
 defineOptions({
   name: "PermitsView",
 });
-const stages = [
-  {
-    name: "Stage 1",
-    done: true,
-    steps: [
-      { name: "Step 1.1", done: true },
-      { name: "Step 1.2", done: true },
-    ],
-  },
-  {
-    name: "Stage 2",
-    current: true,
-    steps: [{ name: "Step 2.1", current: true }, { name: "Step 2.2" }],
-  },
-  { name: "Stage 3", steps: [{ name: "Step 3.1" }, { name: "Step 3.2" }] },
-];
-const activeStage = "Stage 2";
-const activeStep = "Step 2.1";
 </script>
 <style lang="scss" scoped></style>

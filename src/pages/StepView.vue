@@ -2,16 +2,12 @@
   <q-page padding>
     <q-breadcrumbs align="center" class="q-py-md">
       <q-breadcrumbs-el label="Home" to="/" />
-      <q-breadcrumbs-el label="Permit: ###-###-##" to="/permit" />
+      <q-breadcrumbs-el label="Permit: ###-###-##" to="/project" />
       <q-breadcrumbs-el label="Application" />
       <q-breadcrumbs-el label="Applicant Details" />
     </q-breadcrumbs>
     <div class="q-px-md">
-      <StepperNavigation
-        :stages="stages"
-        v-model:activeStage="activeStage"
-        v-model:activeStep="activeStep"
-      />
+      <StepperNavigation />
     </div>
     <div class="q-pa-sm">
       <h3 class="text-center">Applicant Details</h3>
@@ -113,24 +109,5 @@ defineOptions({
 const data = {
   floors: "",
 };
-
-const stages = [
-  {
-    name: "Stage 1",
-    done: true,
-    steps: [
-      { name: "Step 1.1", done: true },
-      { name: "Step 1.2", done: true },
-    ],
-  },
-  {
-    name: "Stage 2",
-    current: true,
-    steps: [{ name: "Step 2.1", current: true }, { name: "Step 2.2" }],
-  },
-  { name: "Stage 3", steps: [{ name: "Step 3.1" }, { name: "Step 3.2" }] },
-];
-const activeStage = "Stage 2";
-const activeStep = "Step 2.1";
 </script>
 <style lang="scss"></style>
