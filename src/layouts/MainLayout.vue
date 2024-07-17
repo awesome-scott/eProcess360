@@ -45,10 +45,21 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer>
-      <q-toolbar>
-        <q-toolbar-title>Footer</q-toolbar-title>
-      </q-toolbar>
+    <q-footer class="footer">
+      <div class="row justify-between bg-primary items-center q-px-md">
+        <div class="col">
+          <small>Powered By: </small>
+          <a href="eprocess360.com" target="_blank" class="footer-link"
+            >eProcess360</a
+          >
+        </div>
+        <div class="col text-center">
+          <a href="eprocess360.com" target="_blank" class="footer-logo"
+            ><img src="~assets/img/logo.svg"
+          /></a>
+        </div>
+        <div class="col text-right"><small>v4.0.1</small></div>
+      </div>
     </q-footer>
   </q-layout>
 </template>
@@ -118,9 +129,23 @@ function toggleRightDrawer() {
   height: 64px;
   width: 64px;
 }
-.avatar {
-  height: 32px;
-  width: 32px;
+.footer {
+  min-height: 64px;
+}
+.footer-link {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.footer-logo {
+  min-height: 64px;
+  max-height: 64px;
+  img {
+    min-height: 64px;
+    max-height: 64px;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -133,10 +158,6 @@ function toggleRightDrawer() {
   .logo {
     height: 96px;
     width: 96px;
-  }
-  .avatar {
-    height: 64px;
-    width: 64px;
   }
 }
 </style>
