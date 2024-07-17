@@ -19,7 +19,7 @@
           <q-btn round dense flat icon="search" />
         </template>
       </q-input>
-      <div class="row" v-show="selectedTags.length > 0">
+      <div class="row gt-xs" v-show="selectedTags.length > 0">
         <q-chip
           clickable
           color="negative"
@@ -40,7 +40,7 @@
           {{ tag }}
         </q-chip>
       </div>
-      <div class="row q-mb-md chip-suggestions">
+      <div class="row gt-xs q-mb-md chip-suggestions">
         <q-chip
           v-for="tag in filteredTags"
           clickable
@@ -72,8 +72,8 @@
                 <h6>{{ projectType.title }}</h6>
                 <q-separator class="q-my-sm" />
                 <p class="q-mb-none q-mt-xs">{{ projectType.description }}</p>
-                <q-separator class="q-my-sm" />
-                <div class="chips text-right">
+                <q-separator class="q-my-sm gt-xs" />
+                <div class="chips gt-xs text-right">
                   <q-chip v-for="tag in projectType.tags" :key="tag">
                     <q-icon v-if="selectedTags.includes(tag)" name="check" />
                     {{ tag }}
