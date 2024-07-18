@@ -36,7 +36,7 @@
       </div>
       <q-form>
         <q-card class="q-pa-md q-mb-md">
-          <h6>{{ activeStep }}</h6>
+          <h6>Contact Information</h6>
           <q-input label="Name" outlined clearable class="q-mb-md" />
           <q-input label="Email" outlined clearable class="q-mb-md" />
           <q-input label="Phone" outlined clearable class="q-mb-md" />
@@ -101,6 +101,13 @@
 </template>
 <script setup>
 import StepperNavigation from "components/StepperNavigation.vue";
+
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>See the <code>/project</code> page for notes on the stepper ui.</p>
+<p>Users should have a back, save, and save & continue (disabled until all required fields are filled) at the top and bottom of the form.</p>
+<p>Obviously using a form builder presents layout/UI complications. Simpler layouts should be prioritized (probably avoiding tabs and accordians)</p>`;
 
 defineOptions({
   name: "StepView",

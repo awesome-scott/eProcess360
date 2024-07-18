@@ -94,6 +94,12 @@ import { useRoute } from "vue-router";
 import permits from "assets/data/permits";
 import licenses from "assets/data/licenses";
 import complaints from "assets/data/complaints";
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>Tags & Search. This may require pagination depending on number of workflows.</p>
+<p>Currently sorting tags by frequency. This should probaby also be limited to just a dozen or so.</p>
+<p>Colors for projects are set by the city. One for licenses, one for complaints, and one for each permit department.</p>`;
 
 const route = useRoute();
 const pageTitle = ref("Projects");

@@ -7,18 +7,9 @@
     </q-breadcrumbs>
     <h3>Contract</h3>
     <div class="row justify-center q-gutter-sm q-mb-md">
-      <q-btn
-        label="Cancel"
-        icon="cancel"
-        color="negative"
-        @click="$router.push('/contract')"
-      />
-      <q-btn
-        label="Save"
-        icon="save"
-        color="positive"
-        @click="$router.push('/contract')"
-      />
+      <q-btn label="Back" icon="arrow_back" color="grey" to="/contract" />
+      <q-btn label="Delete" icon="delete" color="negative" to="/contract" />
+      <q-btn label="Save" icon="save" color="positive" to="/contract" />
     </div>
     <q-card class="bg-orange text-center text-white q-pa-sm q-mb-sm">
       Days Left In Contract<br />
@@ -317,6 +308,11 @@
 
 <script setup>
 import { ref } from "vue";
+
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>I tried keeping the edit page organized the same and just use dialogs for adding new entries for contractors, reminders, notes and documents for a cleaner view.</p>`;
 
 const formData = ref({
   client: "City of Londonville",

@@ -1,8 +1,8 @@
 <template>
   <q-layout view="hhr LpR ffr">
-    <q-header>
+    <q-header id="header">
       <q-toolbar class="q-pa-none custom-header bg-white text-primary">
-        <q-skeleton class="logo" type="rect" />
+        <img src="~assets/img/city-logo.png" class="logo" />
         <q-toolbar-title align="center">
           <h1 class="title">City of AwesomeScott</h1>
         </q-toolbar-title>
@@ -44,6 +44,25 @@
 
     <q-page-container>
       <router-view />
+      <q-page-sticky
+        v-show="pageNotes"
+        position="bottom-left"
+        :offset="[18, 18]"
+      >
+        <q-fab
+          v-model="isNotesActive"
+          vertical-actions-align="left"
+          color="pink"
+          icon="keyboard_arrow_up"
+          direction="up"
+        >
+          <q-card class="card-notes">
+            <q-card-section>
+              <div v-html="pageNotes" />
+            </q-card-section>
+          </q-card>
+        </q-fab>
+      </q-page-sticky>
     </q-page-container>
     <q-footer class="footer">
       <div class="row justify-between bg-primary items-center q-px-md">
@@ -58,7 +77,7 @@
             ><img src="~assets/img/logo.svg"
           /></a>
         </div>
-        <div class="col text-right"><small>v4.0.1</small></div>
+        <div class="col text-right"><small>v0.2.1</small></div>
       </div>
     </q-footer>
   </q-layout>
@@ -66,12 +85,18 @@
 
 <script setup>
 // TODO: menubar is too long. Consider which are needed and consider only showing icons with tooltips ? (kind of hate that)
+
 import { ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
+import { storeToRefs } from "pinia";
+import { useAppStore } from "stores/app";
 
 defineOptions({
   name: "MainLayout",
 });
+
+const appStore = useAppStore();
+const { pageNotes } = storeToRefs(appStore);
 
 const linksList = [
   {
@@ -117,10 +142,11 @@ const rightDrawerOpen = ref(false);
 function toggleRightDrawer() {
   rightDrawerOpen.value = !rightDrawerOpen.value;
 }
+const isNotesActive = ref(false);
 </script>
 <style lang="scss">
 .custom-header {
-  height: 64px;
+  padding: 1rem;
 }
 .title {
   font-size: 24px;
@@ -148,10 +174,19 @@ function toggleRightDrawer() {
   }
 }
 
+.card-notes {
+  background-color: hsla(0, 0%, 100%, 0.2);
+  backdrop-filter: blur(6px);
+  transition: background-color 1s, backdrop-filter 0.3s;
+  width: 300px;
+  max-width: 80vw;
+}
+.card-notes:hover {
+  background-color: hsla(0, 0%, 100%, 1);
+  backdrop-filter: blur(1px);
+}
+
 @media (min-width: 1024px) {
-  .custom-header {
-    height: 96px;
-  }
   .title {
     font-size: 36px;
   }

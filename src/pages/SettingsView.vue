@@ -95,6 +95,13 @@
 <script setup>
 import { ref } from "vue";
 
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>The Settings menu should be easy to navigate clearly indicating where in the structure the user is.</p>
+<p>Only endpoints should have information and fields, so selecting a parent should take you to the first child of that element. For that reason 'All Departments' should be a separate page.</p>
+<p>I would also refrain from putting navigation buttons on pages, as the menu should be straightforward enough.</p>`;
+
 const menu = ref([
   {
     label: "General",

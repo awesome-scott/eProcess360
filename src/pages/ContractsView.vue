@@ -5,6 +5,14 @@
       <q-breadcrumbs-el label="Contracts" />
     </q-breadcrumbs>
     <h3>Contracts</h3>
+    <div class="row justify-center">
+      <q-btn
+        label="Add Contract"
+        icon="add"
+        color="secondary"
+        to="/contract/edit"
+      />
+    </div>
     <q-table
       :grid="$q.screen.lt.md"
       :rows="contracts"
@@ -97,6 +105,10 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>A pretty straight-forward table. I added a grid view for smaller screens since the amount of data at this level is minimal. </p><p>Color-coding by status could also be useful, but I'm unsure of what status values may exist.</p>`;
 
 const router = useRouter();
 const columns = ref([

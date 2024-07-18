@@ -57,6 +57,12 @@ import {
   LineController,
 } from "chart.js";
 
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes =
+  "<p>Default dashboard view should be locked. Users can change/manage dashboards from a dropdown.</p>";
+
 // Register the necessary controllers, elements, and scales
 ChartJS.register(
   BarController,

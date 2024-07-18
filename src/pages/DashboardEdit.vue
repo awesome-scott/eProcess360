@@ -112,6 +112,12 @@ import {
   LineController,
 } from "chart.js";
 
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes =
+  "<p>How to add widgets may change to a drag & drop instead of a dialog.</p>";
+
 // Register the necessary controllers, elements, and scales
 ChartJS.register(
   BarController,

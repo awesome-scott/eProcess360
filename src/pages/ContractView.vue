@@ -66,7 +66,7 @@
         <h5>Reminders</h5>
         <div class="q-mb-sm">
           <div><q-icon name="check" /> <strong>Subject Line Here</strong> - 30 days before</div>
-          <div>To: Charles Mingus {{ `<cmingus@wc-3.com>` }}</div>
+          <div>To: Charles Mingus {{ `<cmingus@wc-3.com>` }}, Jaco Pastorius {{ `<jpastorius@wc-3.com` }}</div>
           <div>From: {{ `<info@wc-3.com>` }}</div>
         </div>
         <div class="q-mb-sm">
@@ -136,6 +136,13 @@
 </template>
 <script setup>
 import { ref } from "vue";
+
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>I regrouped the data slightly. I'm not sure if the Additional Details fields would be uploads or text.</p><p>I think a running log of notes with user and date could be helpful.</p>
+<p>I think having a primary contact for the contract should be part of client details, but being able to list the contacts for multiple contrators may be useful.</p>
+<p>I cleaned up how Reminders are shown and added a checkmark for if that email got sent out. This portion will be influenced with how the email templates are created.</p>`
 
 const columns = ref([
   {

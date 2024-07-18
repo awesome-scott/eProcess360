@@ -120,11 +120,19 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>Most users will interact with the map or go straight to the login.</p>
+  <p>I'm still working on how to handle the title-bar for small screens. I think that those items should just be duplicated in the menu.</p>
+  <p>If a user is logged_in, they should see their 'tasks' depending on their group. <ul><li>Civilians: Applications</li><li>Inspectors: Upcoming Inspections</li><li>Permit Techs: Permits needing TLC?</li><li>etc.</li></ul></p>`;
+
 import gisData from "assets/data/gisdata.js";
 defineOptions({
   name: "HomePage",
 });
 const router = useRouter();
+
 const text = ref("");
 const isLoggedIn = ref(false);
 const columns = [

@@ -64,7 +64,11 @@ const filteredSteps = computed(() => {
       current: stage.current,
     });
 
-    if (stage.steps && current.value && current.value.startsWith(stage.name)) {
+    if (
+      stage.steps &&
+      current.value &&
+      current.value.startsWith(stage.name + "-")
+    ) {
       stage.steps.forEach((step) => {
         flatSteps.push({
           name: stage.name + "-" + step.name,

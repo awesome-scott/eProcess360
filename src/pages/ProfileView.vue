@@ -13,6 +13,13 @@
             class="q-mb-md"
           />
           <q-input
+            v-model="profile.title"
+            label="Title"
+            filled
+            clearable
+            class="q-mb-md"
+          />
+          <q-input
             v-model="profile.email"
             label="Email"
             filled
@@ -58,8 +65,14 @@
 <script setup>
 import { ref } from "vue";
 
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>This page will undergo changes based on users and groups backend data. Obviously, not every user will have write or maybe even read access to the role details. I would refrain from using avatars because staff is unlikely to adopt.</p>`;
+
 const profile = ref({
   name: "John Doe",
+  title: "Building Inspector",
   email: "jdoe@eprocess360.com",
   phone: "123-456-7890",
   departments: ["Building Department", "Fire Department"],

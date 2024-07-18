@@ -47,6 +47,12 @@
 <script setup>
 import StepperNavigation from "components/StepperNavigation.vue";
 
+import { useAppStore } from "stores/app";
+
+const appStore = useAppStore();
+appStore.pageNotes = `<p>I'm still working out best UI for the Stepper. I've termed "Stages" and "Steps". Steps should only be shown if the current Stage is 'active' and should be smaller than the stages (The Stage should also show as active.). I'm uncertain if the step labels need to be shown, but they probably do, making the stepper too cumbersome if the workflow has many stages & steps</p>
+<p>I'm also unsure of what other details besides applicant info, dates and progress should be shown on this overview page, but I think that it needs to be it's own page rather than throwing the user straight into the workflow.</p>`;
+
 defineOptions({
   name: "PermitsView",
 });
