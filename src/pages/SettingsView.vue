@@ -8,81 +8,92 @@
         :to="breadcrumb.to"
       />
     </q-breadcrumbs>
-    <h3 class="text-center">Settings</h3>
-    <div class="row">
+    <q-separator />
+    <div class="row q-mt-md">
       <div class="col-4">
-        <q-list dense>
-          <template v-for="item in menu" :key="item.label">
-            <q-expansion-item
-              v-if="item.children"
-              :label="item.label"
-              :icon="item.icon"
-              :expand-separator-visible="true"
-              group="level_1"
-              v-model="item.expanded"
-              :class="item.expanded ? 'expanded' : ''"
-              @click="expandItem(item)"
-            >
-              <q-list dense class="q-pl-md">
-                <template v-for="child in item.children" :key="child.label">
-                  <q-expansion-item
-                    v-if="child.children"
-                    :label="child.label"
-                    :icon="child.icon"
-                    :expand-separator-visible="true"
-                    group="level_2"
-                    v-model="child.expanded"
-                    class="child"
-                    :class="child.expanded ? 'expanded' : ''"
-                    @click="expandItem(child)"
-                  >
-                    <q-list dense class="q-pl-md">
+        <component
+          :is="$q.screen.gt.sm ? 'div' : 'q-btn'"
+          flat
+          dense
+          icon="menu"
+        >
+          <component :is="$q.screen.gt.sm ? 'div' : 'q-menu'">
+            <q-list dense>
+              <template v-for="item in menu" :key="item.label">
+                <q-expansion-item
+                  v-if="item.children"
+                  :label="item.label"
+                  :icon="item.icon"
+                  :expand-separator-visible="true"
+                  group="level_1"
+                  v-model="item.expanded"
+                  :class="item.expanded ? 'expanded' : ''"
+                  @click="expandItem(item)"
+                >
+                  <q-list dense class="q-pl-md">
+                    <template v-for="child in item.children" :key="child.label">
+                      <q-expansion-item
+                        v-if="child.children"
+                        :label="child.label"
+                        :icon="child.icon"
+                        :expand-separator-visible="true"
+                        group="level_2"
+                        v-model="child.expanded"
+                        class="child"
+                        :class="child.expanded ? 'expanded' : ''"
+                        @click="expandItem(child)"
+                      >
+                        <q-list dense class="q-pl-md">
+                          <q-item
+                            v-for="nestedChild in child.children"
+                            :key="nestedChild.label"
+                            :class="{ selected: isSelected(nestedChild) }"
+                            clickable
+                            v-ripple
+                            @click="selectItem(nestedChild)"
+                          >
+                            <q-item-section avatar>
+                              <q-icon :name="nestedChild.icon" />
+                            </q-item-section>
+                            <q-item-section>{{
+                              nestedChild.label
+                            }}</q-item-section>
+                          </q-item>
+                        </q-list>
+                      </q-expansion-item>
                       <q-item
-                        v-for="nestedChild in child.children"
-                        :key="nestedChild.label"
-                        :class="{ selected: isSelected(nestedChild) }"
+                        v-else
+                        :class="{ selected: isSelected(child) }"
                         clickable
                         v-ripple
-                        @click="selectItem(nestedChild)"
+                        @click="selectItem(child)"
                       >
                         <q-item-section avatar>
-                          <q-icon :name="nestedChild.icon" />
+                          <q-icon :name="child.icon" />
                         </q-item-section>
-                        <q-item-section>{{ nestedChild.label }}</q-item-section>
+                        <q-item-section>{{ child.label }}</q-item-section>
                       </q-item>
-                    </q-list>
-                  </q-expansion-item>
-                  <q-item
-                    v-else
-                    :class="{ selected: isSelected(child) }"
-                    clickable
-                    v-ripple
-                    @click="selectItem(child)"
-                  >
-                    <q-item-section avatar>
-                      <q-icon :name="child.icon" />
-                    </q-item-section>
-                    <q-item-section>{{ child.label }}</q-item-section>
-                  </q-item>
-                </template>
-              </q-list>
-            </q-expansion-item>
-            <q-item
-              v-else
-              :class="{ selected: isSelected(item) }"
-              clickable
-              v-ripple
-              @click="selectItem(item)"
-            >
-              <q-item-section avatar>
-                <q-icon :name="item.icon" />
-              </q-item-section>
-              <q-item-section>{{ item.label }}</q-item-section>
-            </q-item>
-          </template>
-        </q-list>
+                    </template>
+                  </q-list>
+                </q-expansion-item>
+                <q-item
+                  v-else
+                  :class="{ selected: isSelected(item) }"
+                  clickable
+                  v-ripple
+                  @click="selectItem(item)"
+                >
+                  <q-item-section avatar>
+                    <q-icon :name="item.icon" />
+                  </q-item-section>
+                  <q-item-section>{{ item.label }}</q-item-section>
+                </q-item>
+              </template>
+            </q-list>
+          </component>
+        </component>
       </div>
-      <div class="col-8">
+      <div class="col-12 col-md-8">
         <h4 class="text-center">{{ selectedItem.label }}</h4>
         <div class="q-pa-lg">
           <SettingsInfo v-if="selectedItem.label === 'Info'" />
