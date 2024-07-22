@@ -85,7 +85,10 @@
       <div class="col-8">
         <h4 class="text-center">{{ selectedItem.label }}</h4>
         <div class="q-pa-lg">
-          <q-skeleton type="rect" width="100%" height="400px" />
+          <div v-if="selectedItem.label === 'Workflows'">
+            <SettingsWorkflowBuilder />
+          </div>
+          <q-skeleton v-else type="rect" width="100%" height="400px" />
         </div>
       </div>
     </div>
@@ -93,6 +96,7 @@
 </template>
 
 <script setup>
+import SettingsWorkflowBuilder from "components/SettingsWorkflowBuilder.vue";
 import { ref } from "vue";
 
 import { useAppStore } from "stores/app";
