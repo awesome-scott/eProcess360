@@ -10,7 +10,7 @@
     </q-breadcrumbs>
     <q-separator />
     <div class="row q-mt-md">
-      <div class="col-4">
+      <div class="col-md-3">
         <component
           :is="$q.screen.gt.sm ? 'div' : 'q-btn'"
           flat
@@ -93,7 +93,7 @@
           </component>
         </component>
       </div>
-      <div class="col-12 col-md-8">
+      <div class="col">
         <h4 class="text-center">{{ selectedItem.label }}</h4>
         <div class="q-pa-lg">
           <SettingsInfo v-if="selectedItem.label === 'Info'" />
@@ -101,6 +101,7 @@
             v-else-if="selectedItem.label === 'All Departments'"
           />
           <SettingsWorkflows v-else-if="selectedItem.label === 'Workflows'" />
+          <SettingsUsers v-else-if="selectedItem.label === 'Users'" />
           <q-skeleton v-else type="rect" width="100%" height="400px" />
         </div>
       </div>
@@ -112,6 +113,7 @@
 import SettingsInfo from "components/SettingsInfo.vue";
 import SettingsAllDepartments from "components/SettingsAllDepartments.vue";
 import SettingsWorkflows from "components/SettingsWorkflows.vue";
+import SettingsUsers from "components/SettingsUsers.vue";
 import { ref } from "vue";
 
 import { useAppStore } from "stores/app";
@@ -144,7 +146,7 @@ const menu = ref([
         icon: "account_balance",
         expanded: false,
         children: [
-          { label: "Info", icon: "edit" },
+          { label: "Department Info", icon: "edit" },
           { label: "Logos", icon: "center_focus_strong" },
           { label: "Members", icon: "groups" },
           { label: "Templates", icon: "description" },
@@ -159,7 +161,7 @@ const menu = ref([
         icon: "account_balance",
         expanded: false,
         children: [
-          { label: "Info", icon: "edit" },
+          { label: "Department Info", icon: "edit" },
           { label: "Logos", icon: "center_focus_strong" },
           { label: "Members", icon: "groups" },
           { label: "Templates", icon: "description" },
@@ -174,7 +176,7 @@ const menu = ref([
         icon: "account_balance",
         expanded: false,
         children: [
-          { label: "Info", icon: "edit" },
+          { label: "Department Info", icon: "edit" },
           { label: "Logos", icon: "center_focus_strong" },
           { label: "Members", icon: "groups" },
           { label: "Templates", icon: "description" },
