@@ -1,6 +1,6 @@
 <template>
   <div v-if="selectedWorkflow">
-    <div class="row justify-end actions q-gutter-sm">
+    <div class="row justify-center actions q-gutter-sm">
       <q-btn
         @click="selectedWorkflow = false"
         label="Back"
@@ -50,7 +50,7 @@
           expand-separator
           v-for="stage in stages"
           :key="stage.name"
-          class="column"
+          class="column item"
         >
           <div
             class="row items-center show-hover-button cursor-pointer q-pa-sm"
@@ -74,7 +74,7 @@
           </div>
           <div class="row items-center">
             <q-list v-if="stage.steps" dense class="steps q-ml-lg">
-              <q-item v-for="step in stage.steps" :key="step.name">
+              <q-item v-for="step in stage.steps" :key="step.name" class="item">
                 <div
                   class="row items-center show-hover-button-child cursor-pointer q-pa-sm full-width"
                 >
@@ -263,6 +263,9 @@ const stages = [
 ];
 </script>
 <style labng="scss" scoped>
+.item {
+  padding-left: 0 !important;
+}
 .workflow-card {
   transition: background 0.3s, box-shadow 0.3s;
   &:hover {
